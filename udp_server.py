@@ -16,39 +16,37 @@
 # # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # host = socket.gethostname()
 import socket
-from socket import *
 import sys
 from collections import deque
 import queue
 import keyboard
 
-port = int(sys.argv[1])
-serverName = "127.0.0.1"
-BUFFERSIZE = 1024
+PORT = int(sys.argv[1])
+SERVERADDRESS = "localhost"
+# serverName = "localhost"
+# BUFFERSIZE = 1024
+
 # clients = []
 clients = queue.Queue()
 s = socket.socket(
     socket.AF_INET, socket.SOCK_STREAM)
+
 HOST = ''
-server_address = "localhost"
-s.bind((server_address,port)) #initiates connection with port specified.
-listen(1)
+s.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
+s.listen(5)
 print ("Server is ready to receive data...")
 while True:
-        (message, address) = s.recvfrom(BUFFERSIZE)
-        # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        clients.put(message)
-        s.send("hello world")
-# except:
-# conn, addr = s.accept()
-# print('Connected by, ', addr)
-# except:
-
-      # newConnection, client = s.accept()
-#       msg = newConnection.recv(BUFFER_SIZE)
-#
-#       newConnection.send("hello world")
-#       newConnection.close()
+        try:
+            s.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
+            s.listen(5)
+            (message, address) = s.recvfrom(BUFFERSIZE)
+            # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+            clients.put(message)
+            # s.send("hello world")
+        except:
+            s.detach()
+            s.close()
+        break
 s.detach()
 s.close()
 
