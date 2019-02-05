@@ -2,15 +2,7 @@
 
 # The server code that keeps a queue of students waiting,
 # and notifies students when they have reached the head of the queue.
-
-# Get command line argument
-#
-# # Array to keep keep track of queued clients
-
-#
-
-#
-# # Setup socket
+cket
 
 #
 # # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,30 +15,38 @@ import keyboard
 
 PORT = int(sys.argv[1])
 SERVERADDRESS = "localhost"
-# serverName = "localhost"
-# BUFFERSIZE = 1024
+SERVERPORT = 12000
+BUFFERSIZE = 1024
 
-# clients = []
-clients = queue.Queue()
-s = socket.socket(
-    socket.AF_INET, socket.SOCK_STREAM)
-
-HOST = ''
-s.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
-s.listen(5)
+clients = []
+serverSocker = socket.socket(
+    socket.AF_INET, socket.SOCK_DGRAM)
+# HOST = ''
+serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
+serverSocket.listen(5)
 print ("Server is ready to receive data...")
+#
 while True:
         try:
-            s.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
-            s.listen(5)
-            (message, address) = s.recvfrom(BUFFERSIZE)
+            (message, address) = serverSocket.recvfrom(BUFFERSIZE)
+            if not clients:
+                print("Queue is empty...")
+                clients.append("Hello World")
+                break;
+            elif clients[0] is str(message):
+                serverSocket.sendto(,address)
+            else:
+
+                #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            clients.put(message)
+            # if not clients:
+            #     clients.append(message)
             # s.send("hello world")
         except:
             s.detach()
             s.close()
-        break
+for x in clients:
+    print (x)
 s.detach()
 s.close()
 

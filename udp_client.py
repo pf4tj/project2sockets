@@ -19,20 +19,30 @@ name = sys.argv[3]
 # Create a socket and notify the server we want to be added to the office
 # hour queue.
 
+servername = 'localhost'
+BUFFERSIZE = 1024
+
 s = socket.socket(
-    socket.AF_INET, socket.SOCK_STREAM)
+    socket.AF_INET, socket.DGRAM)
 
 s.connect('',port)
 
 s.sendto(name, (host,port))
+s.bind((host, port))
 
+# do while loop maybe so it executes at least once
 while True:
-    s.bind((host, port))
-
+    s.sendto(name, (host,port))
+    (message, address) = serverSocket.recvfrom(BUFFERSIZE)
+    # if (message == name)
+    # else 
+    # if receives standard in
+        # break
+s.close();
 
 if ()
 
-s.sendto(message, host,port)
+# s.sendto(message, host,port)
 
 
 # (host, port)
@@ -44,4 +54,3 @@ s.sendto(message, host,port)
 
 
 # Wait for user to signal that we are done (via stdin) and notify the server.
-
