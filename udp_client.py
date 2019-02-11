@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import socket
 import sys
+import msvcrt as m
+def wait():
+    m.getch()
 
 # The client code that requests a spot in the queue, a
 # nd notifies the server when the student is finished getting help during office hours.
@@ -22,35 +25,44 @@ name = sys.argv[3]
 servername = 'localhost'
 BUFFERSIZE = 1024
 
-s = socket.socket(
-    socket.AF_INET, socket.DGRAM)
+print('Please enter into keyboard : ')
+wait()
+typedString  = input()
+if (len(typedString) > 0) :  print('raw input detected')
+# first_input = sys.stdin.readline()
+# print (first_input)
 
-s.connect('',port)
+# print('keyboard input recognized')
 
-s.sendto(name, (host,port))
-s.bind((host, port))
+# s = socket.socket(
+#     socket.AF_INET, socket.DGRAM)
+
+# s.connect('',port)
+
+# s.sendto(name, (host,port))
+# s.bind((host, port))
 
 # do while loop maybe so it executes at least once
-while True:
-    s.sendto(name, (host,port))
-    (message, address) = serverSocket.recvfrom(BUFFERSIZE)
+# while True:
+#     s.sendto(name, (host,port))
+#     (message, address) = serverSocket.recvfrom(BUFFERSIZE)
     # if (message == name)
     # else 
     # if receives standard in
         # break
-s.close();
+# s.close();
 
-if ()
+# if ()
 
-# s.sendto(message, host,port)
-
-
-# (host, port)
-
-# print(host)
-
-# Wait for head of queue message from the server.
+# # s.sendto(message, host,port)
 
 
+# # (host, port)
 
-# Wait for user to signal that we are done (via stdin) and notify the server.
+# # print(host)
+
+# # Wait for head of queue message from the server.
+
+
+
+# # Wait for user to signal that we are done (via stdin) and notify the server.

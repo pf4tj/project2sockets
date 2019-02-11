@@ -25,17 +25,17 @@ serverSocker = socket.socket(
 serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
 serverSocket.listen(5)
 print ("Server is ready to receive data...")
-#
 while True:
         try:
             (message, address) = serverSocket.recvfrom(BUFFERSIZE)
             if not clients:
                 print("Queue is empty...")
-                clients.append("Hello World")
-                break;
+                clients.append(message)
             elif clients[0] is str(message):
                 serverSocket.sendto(,address)
+                clients.pop(0);
             else:
+                clients.append(message)
 
                 #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
