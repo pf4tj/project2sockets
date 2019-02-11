@@ -23,24 +23,22 @@ servername = 'localhost'
 BUFFERSIZE = 1024
 
 s = socket.socket(
-    socket.AF_INET, socket.DGRAM)
+    socket.AF_INET, socket.SOCK_DGRAM)
 
-s.connect('',port)
-
-s.sendto(name, (host,port))
-s.bind((host, port))
+#s.connect((servername,port))
+#s.bind((host, port))
+s.sendto(name.encode(), (host,port))
 
 # do while loop maybe so it executes at least once
 while True:
-    s.sendto(name, (host,port))
-    (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-    # if (message == name)
-    # else 
-    # if receives standard in
-        # break
-s.close();
+    (message, address) = s.recvfrom(BUFFERSIZE)
+    print("Message: %d, Address: %d", message, address)
+    if (message == name):
+        if sys.stdin:
+            break;
 
-if ()
+
+s.close();
 
 # s.sendto(message, host,port)
 
