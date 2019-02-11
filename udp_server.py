@@ -2,7 +2,7 @@
 
 # The server code that keeps a queue of students waiting,
 # and notifies students when they have reached the head of the queue.
-cket
+
 
 #
 # # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,7 +11,7 @@ import socket
 import sys
 from collections import deque
 import queue
-import keyboard
+# import keyboard
 
 PORT = int(sys.argv[1])
 SERVERADDRESS = "localhost"
@@ -19,23 +19,32 @@ SERVERPORT = 12000
 BUFFERSIZE = 1024
 
 clients = []
-serverSocker = socket.socket(
+serverSocket = socket.socket(
     socket.AF_INET, socket.SOCK_DGRAM)
 # HOST = ''
 serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
-serverSocket.listen(5)
+#serverSocket.listen(5)
 print ("Server is ready to receive data...")
 while True:
         try:
             (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-            if not clients:
-                print("Queue is empty...")
-                clients.append(message)
-            elif clients[0] is str(message):
-                serverSocket.sendto(,address)
-                clients.pop(0);
+            #print("Queue is empty...")
+            clients.append(message)
+
+            if clients[0] is str(message):
+                serverSocket.sendto(message,address)
+                (input,address) = serverSocket.recvfrom(BUFFERSIZE)
+                if(input):
+                    for x in clients:
+                        clients[x] = clients[x+1]
+                    del clients[len(clients)]
             else:
-                clients.append(message)
+                serverSocket.sendto(clients[0],address)
+                (input,address) = serverSocket.recvfrom(BUFFERSIZE)
+                if(input):
+                    for x in clients:
+                        clients[x] = clients[x+1]
+                    del clients[len(clients)]
 
                 #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -45,8 +54,7 @@ while True:
         except:
             s.detach()
             s.close()
-for x in clients:
-    print (x)
+
 s.detach()
 s.close()
 

@@ -25,6 +25,7 @@ name = sys.argv[3]
 servername = 'localhost'
 BUFFERSIZE = 1024
 
+<<<<<<< HEAD
 print('Please enter into keyboard : ')
 wait()
 typedString  = input()
@@ -53,6 +54,25 @@ if (len(typedString) > 0) :  print('raw input detected')
 # s.close();
 
 # if ()
+=======
+s = socket.socket(
+    socket.AF_INET, socket.SOCK_DGRAM)
+
+#s.connect((servername,port))
+#s.bind((host, port))
+s.sendto(name.encode(), (host,port))
+
+# do while loop maybe so it executes at least once
+while True:
+    (message, address) = s.recvfrom(BUFFERSIZE)
+    print("Message: %d, Address: %d", message, address)
+    if (message == name):
+        if sys.stdin:
+            break;
+
+
+s.close();
+>>>>>>> 7c595241c4a084222f2e0d865874acc51ad3cd92
 
 # # s.sendto(message, host,port)
 
