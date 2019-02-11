@@ -14,11 +14,10 @@ import queue
 # import keyboard
 
 PORT = int(sys.argv[1])
-SERVERADDRESS = "localhost"
-SERVERPORT = 12000
+SERVERADDRESS = "127.0.0.1"
 BUFFERSIZE = 1024
 
-clients = []
+clients = deque([])
 serverSocket = socket.socket(
     socket.AF_INET, socket.SOCK_DGRAM)
 # HOST = ''
@@ -29,22 +28,29 @@ while True:
         try:
             (message, address) = serverSocket.recvfrom(BUFFERSIZE)
             #print("Queue is empty...")
+            message = message.decode('UTF-8')
             clients.append(message)
 
             if clients[0] is str(message):
-                serverSocket.sendto(message,address)
+                print(message, "is at head of queue")
+                serverSocket.sendto(message.encode(),address)
+                print("Waiting for response from", message)
                 (input,address) = serverSocket.recvfrom(BUFFERSIZE)
-                if(input):
-                    for x in clients:
-                        clients[x] = clients[x+1]
-                    del clients[len(clients)]
+                input = input.decode()
+                print(input)
+                if input is not None:
+                    clients.popleft()
+                    print(message, "deleted from queue")
             else:
-                serverSocket.sendto(clients[0],address)
+                print(clients[0], "is at head of queue")
+                serverSocket.sendto(clients[0].encode(),address)
+                print("Waiting for response from", clients[0])
                 (input,address) = serverSocket.recvfrom(BUFFERSIZE)
-                if(input):
-                    for x in clients:
-                        clients[x] = clients[x+1]
-                    del clients[len(clients)]
+                input = input.decode()
+                print(input)
+                if input is not None:
+                    clients.popleft()
+                    print(clients[0], "deleted from queue")
 
                 #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -52,11 +58,11 @@ while True:
             #     clients.append(message)
             # s.send("hello world")
         except:
-            s.detach()
-            s.close()
+            serverSocket.detach()
+            serverSocket.close()
 
-s.detach()
-s.close()
+serverSocket.detach()
+serverSocket.close()
 
 #s.accept()
 

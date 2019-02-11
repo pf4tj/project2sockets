@@ -65,9 +65,15 @@ s.sendto(name.encode(), (host,port))
 # do while loop maybe so it executes at least once
 while True:
     (message, address) = s.recvfrom(BUFFERSIZE)
-    print("Message: %d, Address: %d", message, address)
+    message = message.decode()
+    print("Message:", message, "Address:", address)
+    print("Name:", name)
     if (message == name):
-        if sys.stdin:
+        print("waiting for input")
+        x = input()
+        if(len(x) > 0):
+            print("Sending remove response to server")
+            s.sendto(x.encode(), (host,port))
             break;
 
 
