@@ -25,36 +25,6 @@ name = sys.argv[3]
 servername = 'localhost'
 BUFFERSIZE = 1024
 
-<<<<<<< HEAD
-print('Please enter into keyboard : ')
-wait()
-typedString  = input()
-if (len(typedString) > 0) :  print('raw input detected')
-# first_input = sys.stdin.readline()
-# print (first_input)
-
-# print('keyboard input recognized')
-
-# s = socket.socket(
-#     socket.AF_INET, socket.DGRAM)
-
-# s.connect('',port)
-
-# s.sendto(name, (host,port))
-# s.bind((host, port))
-
-# do while loop maybe so it executes at least once
-# while True:
-#     s.sendto(name, (host,port))
-#     (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-    # if (message == name)
-    # else 
-    # if receives standard in
-        # break
-# s.close();
-
-# if ()
-=======
 s = socket.socket(
     socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -74,11 +44,10 @@ while True:
         if(len(x) > 0):
             print("Sending remove response to server")
             s.sendto(x.encode(), (host,port))
-            break;
+            break
 
 
-s.close();
->>>>>>> 7c595241c4a084222f2e0d865874acc51ad3cd92
+s.close()
 
 # # s.sendto(message, host,port)
 

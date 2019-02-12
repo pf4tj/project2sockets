@@ -26,10 +26,16 @@ while True:
             r2 = ''.join(random.choices(string.printable, k=20))
             message = '{}PASSWORD={}.{}'.format(r1, password, r2)
             mystery.send(message.encode())
-
+            start = message.find('PASSWORD=')
+            if (start != -1):
+                message = message[start + 9:]
+                end  = message.find('.')
+                print(message[:end])
             # Wait one second before sending more data. This kind of seems like
             # how the mystery socket works.
             time.sleep(1)
+
+            exit(0)
 
     except:
         # Wait a couple seconds before retrying.
