@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from socket import *
 import socket
 import sys
 
@@ -27,24 +28,30 @@ s = socket.socket(
 
 #s.connect((servername,port))
 #s.bind((host, port))
-s.sendto(name.encode(), (host,port))
-
+x = name
+closeFlag = False
 # do while loop maybe so it executes at least once
 while True:
-    (message, address) = s.recvfrom(BUFFERSIZE)
+    print("Client sending", x)
+    s.sendto(x.encode(), (host,port))
+
+    if(closeFlag):
+        break
+        
+    print("Waiting on server response")
+    message = s.recv(BUFFERSIZE)
     message = message.decode()
-    print("Message:", message, "Address:", address)
-    print("Name:", name)
+
     if (message == name):
-        print("waiting for input")
-        x = input()
-        if(len(x) > 0):
+        x = input("Press Enter to indicate you are finished getting help.")
+
+        if(x == ""):
+            x="XXXXXX"
             print("Sending remove response to server")
-            s.sendto(x.encode(), (host,port))
-            break;
+            closeFlag = True
+s.close()
 
 
-s.close();
 
 # s.sendto(message, host,port)
 

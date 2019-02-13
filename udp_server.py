@@ -7,6 +7,7 @@
 #
 # # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # host = socket.gethostname()
+from socket import *
 import socket
 import sys
 from collections import deque
@@ -23,47 +24,32 @@ serverSocket = socket.socket(
 # HOST = ''
 serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
 #serverSocket.listen(5)
-print ("Server is ready to receive data...")
-#
+
+
 while True:
-        try:
-            (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-            #print("Queue is empty...")
-            message = message.decode('UTF-8')
-            clients.append(message)
+        print ("Server is ready to receive data...")
+        (message, address) = serverSocket.recvfrom(BUFFERSIZE)
+        message = message.decode('UTF-8')
+        print("Server recieved", message)
 
-            if clients[0] is str(message):
-                print(message, "is at head of queue")
-                serverSocket.sendto(message.encode(),address)
-                print("Waiting for response from", message)
-                (input,address) = serverSocket.recvfrom(BUFFERSIZE)
-                input = input.decode()
-                print(input)
-                if input is not None:
-                    clients.popleft()
-                    print(message, "deleted from queue")
-            else:
-                print(clients[0], "is at head of queue")
-                serverSocket.sendto(clients[0].encode(),address)
-                print("Waiting for response from", clients[0])
-                (input,address) = serverSocket.recvfrom(BUFFERSIZE)
-                input = input.decode()
-                print(input)
-                if input is not None:
-                    clients.popleft()
-                    print(clients[0], "deleted from queue")
-
+        if(message == "XXXXXX"):
+            #serverSocket.sendto(clients[0].encode(),address)
+            print(clients[0], "deleted from queue")
+            clients.popleft()
+        else:
+            try:
+                clients.index(message)
+            except ValueError:
+                clients.append(message)
+                print(message, "added to queue")
+        if(len(clients) > 0):
+            serverSocket.sendto(clients[0].encode(), address)
                 #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
             # if not clients:
             #     clients.append(message)
             # s.send("hello world")
-        except:
-            serverSocket.detach()
-            serverSocket.close()
 
-serverSocket.detach()
-serverSocket.close()
 
 #s.accept()
 
