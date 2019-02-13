@@ -2,6 +2,9 @@
 from socket import *
 import socket
 import sys
+import msvcrt as m
+def wait():
+    m.getch()
 
 # The client code that requests a spot in the queue, a
 # nd notifies the server when the student is finished getting help during office hours.
@@ -48,20 +51,28 @@ while True:
         if(x == ""):
             x="XXXXXX"
             print("Sending remove response to server")
+<<<<<<< HEAD
             closeFlag = True
 s.close()
 
 
-
-# s.sendto(message, host,port)
-
-
-# (host, port)
-
-# print(host)
-
-# Wait for head of queue message from the server.
+=======
+            s.sendto(x.encode(), (host,port))
+            break
 
 
+s.close()
+>>>>>>> 8f05a22bf8c4bfd6abdf727168639f290a8d9f00
 
-# Wait for user to signal that we are done (via stdin) and notify the server.
+# # s.sendto(message, host,port)
+
+
+# # (host, port)
+
+# # print(host)
+
+# # Wait for head of queue message from the server.
+
+
+
+# # Wait for user to signal that we are done (via stdin) and notify the server.

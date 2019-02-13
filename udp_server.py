@@ -24,6 +24,16 @@ serverSocket = socket.socket(
 # HOST = ''
 serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
 #serverSocket.listen(5)
+<<<<<<< HEAD
+=======
+print ("Server is ready to receive data...")
+while True:
+        try:
+            (message, address) = serverSocket.recvfrom(BUFFERSIZE)
+            #print("Queue is empty...")
+            message = message.decode('UTF-8')
+            clients.append(message)
+>>>>>>> 8f05a22bf8c4bfd6abdf727168639f290a8d9f00
 
 
 while True:
