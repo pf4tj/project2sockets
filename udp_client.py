@@ -42,7 +42,7 @@ while True:
 
     print("Waiting on server response")
     recvMessage = s.recv(BUFFERSIZE)
-    recvMessage = message.decode()
+    recvMessage = recvMessage.decode()
 
     if (recvMessage == name):
         x = input("At head of queue, press Enter to indicate you are finished getting help.")
