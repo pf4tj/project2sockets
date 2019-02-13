@@ -24,36 +24,32 @@ serverSocket = socket.socket(
 # HOST = ''
 serverSocket.bind((SERVERADDRESS,PORT)) #initiates connection with port specified.
 #serverSocket.listen(5)
-<<<<<<< HEAD
-=======
-print ("Server is ready to receive data...")
-while True:
-        try:
-            (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-            #print("Queue is empty...")
-            message = message.decode('UTF-8')
-            clients.append(message)
->>>>>>> 8f05a22bf8c4bfd6abdf727168639f290a8d9f00
 
 
 while True:
         print ("Server is ready to receive data...")
-        (message, address) = serverSocket.recvfrom(BUFFERSIZE)
-        message = message.decode('UTF-8')
-        print("Server recieved", message)
+        (recvMessage, address) = serverSocket.recvfrom(BUFFERSIZE)
+        recvMessage = recvMessage.decode('UTF-8')
+        print("Server recieved", recvMessage)
 
-        if(message == "XXXXXX"):
+        if(recvMessage == "XXXXXX"):
             #serverSocket.sendto(clients[0].encode(),address)
             print(clients[0], "deleted from queue")
             clients.popleft()
         else:
             try:
-                clients.index(message)
+                clients.index(recvMessage)
             except ValueError:
-                clients.append(message)
-                print(message, "added to queue")
-        if(len(clients) > 0):
-            serverSocket.sendto(clients[0].encode(), address)
+                clients.append(recvMessage)
+                print(recvMessage, "added to queue")
+
+        if clients[0] is not None:
+            sendMessage = clients[0]
+        else:
+            sendMessage = "XXXXXX"
+
+
+        serverSocket.sendto(sendMessage.encode(), address)
                 #
             # s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
             # if not clients:

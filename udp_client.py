@@ -31,38 +31,36 @@ s = socket.socket(
 
 #s.connect((servername,port))
 #s.bind((host, port))
-x = name
+sendMessage = name
 closeFlag = False
+firstInstance = True
 # do while loop maybe so it executes at least once
 while True:
-    print("Client sending", x)
-    s.sendto(x.encode(), (host,port))
 
-    if(closeFlag):
-        break
-        
+    print("Client sending", sendMessage)
+    s.sendto(sendMessage.encode(), (host,port))
+
     print("Waiting on server response")
-    message = s.recv(BUFFERSIZE)
-    message = message.decode()
+    recvMessage = s.recv(BUFFERSIZE)
+    recvMessage = message.decode()
 
-    if (message == name):
-        x = input("Press Enter to indicate you are finished getting help.")
+    if (recvMessage == name):
+        x = input("At head of queue, press Enter to indicate you are finished getting help.")
 
         if(x == ""):
-            x="XXXXXX"
+            sendMessage="XXXXXX"
             print("Sending remove response to server")
-<<<<<<< HEAD
-            closeFlag = True
-s.close()
+    elif(recvMessage == "XXXXXX"):
+        break
+    else:
+        x = input("Not at head of queue, press enter to try again")
 
-
-=======
-            s.sendto(x.encode(), (host,port))
-            break
-
+        if(x == ""):
+            continue
 
 s.close()
->>>>>>> 8f05a22bf8c4bfd6abdf727168639f290a8d9f00
+
+
 
 # # s.sendto(message, host,port)
 
