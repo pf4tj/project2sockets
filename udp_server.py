@@ -34,8 +34,9 @@ while True:
 
         if(recvMessage == "XXXXXX"):
             #serverSocket.sendto(clients[0].encode(),address)
-            print(clients[0], "deleted from queue")
-            clients.popleft()
+            if(len(clients) > 0):
+                print(clients[0], "deleted from queue")
+                clients.popleft()
         else:
             try:
                 clients.index(recvMessage)
@@ -43,7 +44,7 @@ while True:
                 clients.append(recvMessage)
                 print(recvMessage, "added to queue")
 
-        if clients[0] is not None:
+        if(len(clients) > 0):
             sendMessage = clients[0]
         else:
             sendMessage = "XXXXXX"
